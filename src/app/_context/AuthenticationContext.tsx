@@ -1,43 +1,14 @@
-import {
-  AppConfig,
-  showConnect,
-  showSignMessage,
-  UserSession,
-} from "@stacks/connect";
-import {
-  StacksDevnet,
-  StacksMainnet,
-  StacksMocknet,
-  StacksNetwork,
-  StacksTestnet,
-} from "@stacks/network";
+import { showConnect, showSignMessage } from "@stacks/connect";
 import React, { createContext, useEffect, useState } from "react";
 import { apiClient } from "@/lib/client/apiClient";
-import { HOST_URL, STACKS_ENV, Network } from "@/lib/config";
+import {
+  STACKS_ENV,
+  Network,
+  getNetwork,
+  walletSession,
+  appDetails,
+} from "@/lib/config";
 import { SessionData } from "@/lib/server/session";
-
-const appConfig = new AppConfig(["store_write", "publish_data"], HOST_URL);
-const appDetails = {
-  name: "Felix",
-  icon: `http://felixapp.xyz/favicon.ico`,
-};
-const walletSession = new UserSession({ appConfig });
-
-function getNetwork(): StacksNetwork {
-  if (STACKS_ENV === Network.DEVNET) {
-    return new StacksDevnet();
-  }
-
-  if (STACKS_ENV === Network.TESTNET) {
-    return new StacksTestnet();
-  }
-
-  if (STACKS_ENV === Network.MAINNET) {
-    return new StacksMainnet();
-  }
-
-  return new StacksMocknet();
-}
 
 const AuthenticationContext = createContext<{
   signIn: () => Promise<void>;
