@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { getAllPosts, getPostBySlug } from "@/lib/api";
-import markdownToHtml from "@/lib/markdownToHtml";
+import { getAllPosts, getPostBySlug } from "@/lib/server/posts";
+import markdownToHtml from "@/lib/server/markdownToHtml";
 import { Header } from "@/app/_ui/Header";
 import { Footer } from "@/app/_ui/Footer";
 

@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Header } from "../_ui/Header";
 import { Footer } from "../_ui/Footer";
-import { getAllPosts } from "@/lib/api";
+import { getAllPosts } from "@/lib/server/posts";
 
 export default function Posts() {
   const allPosts = getAllPosts();
