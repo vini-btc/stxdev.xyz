@@ -2,11 +2,11 @@ import Link from "next/link";
 import { Header } from "../_ui/Header";
 import { Footer } from "../_ui/Footer";
 import { getAllPosts } from "@/lib/server/posts";
-import { getSession } from "@/lib/server/session";
+import { getSessionData } from "@/lib/server/session";
 
 export default async function Posts() {
   const allPosts = getAllPosts();
-  const session = await getSession();
+  const session = await getSessionData();
   return (
     <>
       <Header session={session} />
