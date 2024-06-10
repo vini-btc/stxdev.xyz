@@ -5,9 +5,9 @@ import {
   AuthenticationProvider,
   useAuthentication,
 } from "../_context/AuthenticationContext";
-import { IronSessionData } from "iron-session";
 import { FC } from "react";
 import toast from "react-hot-toast";
+import { SessionData } from "@/lib/server/session";
 
 const ConnectButton = () => {
   const { signIn } = useAuthentication();
@@ -19,12 +19,26 @@ const ConnectButton = () => {
       toast.error("Authentication failed");
     }
   };
-  return <button onClick={handleSignIn}>connect</button>;
+  return (
+    <button
+      className="hover:underline hover:underline-offset-4"
+      onClick={handleSignIn}
+    >
+      (connect)
+    </button>
+  );
 };
 
 const DisconnectButton = () => {
   const { signOut } = useAuthentication();
-  return <button onClick={() => signOut()}>disconnect</button>;
+  return (
+    <button
+      className="hover:underline hover:underline-offset-4"
+      onClick={() => signOut()}
+    >
+      (disconnect)
+    </button>
+  );
 };
 
 const WalletConnectButton = () => {
@@ -36,27 +50,32 @@ const WalletConnectButton = () => {
   );
 };
 
-export const Header: FC<{ session: IronSessionData | undefined }> = ({
+export const Header: FC<{ session: SessionData | undefined }> = ({
   session,
 }) => {
   return (
-    <header className="flex justify-between w-full border-b border-white border-dotted pb-2">
+    <header className="flex flex-col justify-between w-full border-b border-white border-dotted pb-2">
       <span id="logo">
         <Link href="/">(stxdev.xyz)</Link>
       </span>
-      <nav>
-        <ul className="flex space-x-2">
+      <nav className="place-self-end pt-1 text-sm">
+        <ul className="flex overflow-x-auto max-w-full flex-wrap ml-4 sm:ml-0">
+          <li>(</li>
           <li>
-            <Link href="/about">about</Link>
+            <Link href="/about">(about)</Link>
           </li>
           <li>
-            <Link href="/posts">posts</Link>
+            <Link href="/membership">(membership)</Link>
+          </li>
+          <li>
+            <Link href="/posts">(posts)</Link>
           </li>
           <li>
             <AuthenticationProvider session={session}>
               <WalletConnectButton />
             </AuthenticationProvider>
           </li>
+          <li>)</li>
         </ul>
       </nav>
     </header>
