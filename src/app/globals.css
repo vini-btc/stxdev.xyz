@@ -18,6 +18,20 @@ body {
         rgb(var(--background-start-rgb));
 }
 
+.animated-feature-post svg {
+    min-width: 15px;
+}
+.animated-feature-post svg,
+.animated-feature-post span {
+    transition: 125ms all ease-in;
+}
+.animated-feature-post:hover svg {
+    transform: translateX(6px);
+}
+.animated-feature-post:hover span {
+    transform: translateX(3px);
+}
+
 @layer utilities {
     .text-balance {
         text-wrap: balance;
