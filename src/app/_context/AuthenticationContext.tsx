@@ -24,13 +24,14 @@ const AuthenticationContext = createContext<{
   },
 });
 
-const getChallengeMessage = async (address: string) => {
+const getChallengeMessage = async (address: string): Promise<string> => {
   const response = await apiClient.get(
     `/session/get-challenge?stxAddress=${address}`,
   );
   if (response.status !== 200) {
     throw new Error("Failed to get challenge");
   }
+  return response.data.challenge;
 };
 
 const verifyChallenge = async ({
@@ -86,10 +87,6 @@ function AuthenticationProvider({
 
   const connectWallet = async (): Promise<string> => {
     return new Promise((resolve, reject) => {
-      const maybeConnectedWalletAddress = getConnectedWalletAddress();
-      if (maybeConnectedWalletAddress !== undefined) {
-        return resolve(maybeConnectedWalletAddress);
-      }
       showConnect({
         appDetails,
         onFinish: async (payload) => {

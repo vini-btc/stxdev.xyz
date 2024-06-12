@@ -3,7 +3,7 @@ import { addressToString, createAddress } from "@stacks/transactions";
 import crypto from "crypto";
 import { NextRequest, NextResponse } from "next/server";
 
-function generateChallenge(): string {
+function generateChallengeNonce(): string {
   return crypto.randomBytes(32).toString("hex");
 }
 
@@ -16,8 +16,12 @@ export async function GET(req: NextRequest) {
     const stxAddress = requestUrl.get("stxAddress") ?? "";
     const principalAddress = createAddress(stxAddress);
     const session = await getSession();
-    const challenge = generateChallenge();
+    const nonce = generateChallengeNonce();
+    const challenge = `
+      Hi! You're connecting to stxdev.xyz. Please sign this message so we can confirm your address.
 
+      nonce: ${nonce}
+      `;
     session.stxAddress = addressToString(principalAddress);
     session.challenge = challenge;
     session.challengeValidUntil = Date.now() + 1000 * 60 * 15; // 15min
