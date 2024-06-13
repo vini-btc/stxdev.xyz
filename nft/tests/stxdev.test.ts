@@ -4,6 +4,7 @@ import {
   principalCV,
   someCV,
   stringAsciiCV,
+  tupleCV,
   uintCV,
 } from "@stacks/transactions";
 import { describe, expect, it } from "vitest";
@@ -194,5 +195,94 @@ describe("stxdev NFT token", () => {
       address1
     );
     expect(result).toBeOk(uintCV(101));
+  });
+
+  it("increases a principal token balance on mint", () => {
+    simnet.callPublicFn("stxdev", "mint", [principalCV(address1)], address1);
+    const balanceForOwner = simnet.getMapEntry(
+      "stxdev",
+      "token-balance",
+      tupleCV({ owner: principalCV(address1) })
+    );
+    expect(balanceForOwner).toBeSome(uintCV(1));
+
+    simnet.callPublicFn("stxdev", "mint", [principalCV(address1)], address1);
+
+    const balanceForOwnerAfterSecondMint = simnet.getMapEntry(
+      "stxdev",
+      "token-balance",
+      tupleCV({ owner: principalCV(address1) })
+    );
+    expect(balanceForOwnerAfterSecondMint).toBeSome(uintCV(2));
+  });
+
+  it("decreases the owner and increases the recipient token balance on transfer", () => {
+    simnet.callPublicFn("stxdev", "mint", [principalCV(address1)], address1);
+    simnet.callPublicFn("stxdev", "mint", [principalCV(address1)], address1);
+    const ownerBalanceBeforeTransfer = simnet.getMapEntry(
+      "stxdev",
+      "token-balance",
+      tupleCV({ owner: principalCV(address1) })
+    );
+    expect(ownerBalanceBeforeTransfer).toBeSome(uintCV(2));
+
+    simnet.callPublicFn(
+      "stxdev",
+      "transfer",
+      [uintCV(1), principalCV(address1), principalCV(address2)],
+      address1
+    );
+    const ownerBalanceAfterFirstTransfer = simnet.getMapEntry(
+      "stxdev",
+      "token-balance",
+      tupleCV({ owner: principalCV(address1) })
+    );
+    expect(ownerBalanceAfterFirstTransfer).toBeSome(uintCV(1));
+
+    simnet.callPublicFn(
+      "stxdev",
+      "transfer",
+      [uintCV(2), principalCV(address1), principalCV(address3)],
+      address1
+    );
+    const ownerBalanceAfterSecondTransfer = simnet.getMapEntry(
+      "stxdev",
+      "token-balance",
+      tupleCV({ owner: principalCV(address1) })
+    );
+    expect(ownerBalanceAfterSecondTransfer).toBeSome(uintCV(0));
+  });
+
+  it("correctly tells if a principal owns a token", () => {
+    const { result: ownerWithoutBalance } = simnet.callReadOnlyFn(
+      "stxdev",
+      "is-token-owner",
+      [principalCV(address1)],
+      address1
+    );
+    expect(ownerWithoutBalance).toBeOk(boolCV(false));
+
+    simnet.callPublicFn("stxdev", "mint", [principalCV(address1)], address1);
+    const { result: ownerWithBalance } = simnet.callReadOnlyFn(
+      "stxdev",
+      "is-token-owner",
+      [principalCV(address1)],
+      address1
+    );
+    expect(ownerWithBalance).toBeOk(boolCV(true));
+
+    simnet.callPublicFn(
+      "stxdev",
+      "transfer",
+      [uintCV(1), principalCV(address1), principalCV(address2)],
+      address1
+    );
+    const { result: ownerWithZeroBalance } = simnet.callReadOnlyFn(
+      "stxdev",
+      "is-token-owner",
+      [principalCV(address1)],
+      address1
+    );
+    expect(ownerWithZeroBalance).toBeOk(boolCV(false));
   });
 });
