@@ -1,9 +1,12 @@
 import { Header } from "../_ui/Header";
 import { Footer } from "../_ui/Footer";
+import { PageProvider } from "../_context/PageProvider";
+import { getSessionData } from "@/lib/server/session";
 
-export default function About() {
+export default async function About() {
+  const session = await getSessionData();
   return (
-    <>
+    <PageProvider session={session}>
       <Header />
       <section className="py-4 w-full min-h-full prose prose-invert prose-p:font-mono prose-h1:font-mono prose-h1:font-normal prose-h2:font-normal">
         <h1>About</h1>
@@ -25,6 +28,6 @@ export default function About() {
         </p>
       </section>
       <Footer />
-    </>
+    </PageProvider>
   );
 }

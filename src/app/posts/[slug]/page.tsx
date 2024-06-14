@@ -4,11 +4,12 @@ import { getAllPosts, getPostBySlug } from "@/lib/server/posts";
 import markdownToHtml from "@/lib/server/markdownToHtml";
 import { Header } from "@/app/_ui/Header";
 import { Footer } from "@/app/_ui/Footer";
-import { getSession } from "@/lib/server/session";
+import { getSessionData } from "@/lib/server/session";
+import { PageProvider } from "@/app/_context/PageProvider";
 
 export default async function Post({ params }: Params) {
   const post = getPostBySlug(params.slug);
-  const session = await getSession();
+  const session = await getSessionData();
 
   if (!post) {
     return notFound();
@@ -17,8 +18,8 @@ export default async function Post({ params }: Params) {
   const content = await markdownToHtml(post.content || "");
 
   return (
-    <>
-      <Header session={session} />
+    <PageProvider session={session}>
+      <Header />
       <article className="overflow-y-auto flex-grow flex-shrink py-16 prose">
         <h1 className="font-mono text-white font-normal">{post.title}</h1>
         <div
@@ -27,7 +28,7 @@ export default async function Post({ params }: Params) {
         />
       </article>
       <Footer />
-    </>
+    </PageProvider>
   );
 }
 
