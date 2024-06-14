@@ -17,11 +17,13 @@ export enum Network {
 
 export const STACKS_ENV: Network = Network.DEVNET;
 export const API_URL = "http://localhost:3000/api";
-export const BLOCKCHAIN_API_URL = "http://localhost:9001";
+export const BLOCKCHAIN_API_URL = "http://localhost:3999";
 export const BLOCKCHAIN_API_KEY = "?";
 export const COOKIE_NAME = "stxdev.xyz";
 export const SECRET_COOKIE_PASSWORD =
   "it-is-a-secret-but-a-very-long-one-so-you-would-have-a-hard-time-guessing-it-if-you-tried";
+export const NFT_CONTRACT_ADDRESS = "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM";
+export const NFT_CONTRACT_NAME = "stxdev";
 
 export const appConfig = new AppConfig(
   ["store_write", "publish_data"],
