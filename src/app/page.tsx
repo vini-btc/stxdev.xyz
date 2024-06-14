@@ -4,13 +4,14 @@ import { Footer } from "./_ui/Footer";
 import { getAllPosts } from "@/lib/server/posts";
 import { getSessionData } from "@/lib/server/session";
 import { DoubleArrowRightIcon } from "@radix-ui/react-icons";
+import { PageProvider } from "./_context/PageProvider";
 
 export default async function Home() {
   const session = await getSessionData();
   const allPosts = getAllPosts();
   return (
-    <>
-      <Header session={session} />
+    <PageProvider session={session}>
+      <Header />
       <main className="flex flex-col p-2">
         <h1 className="text-2xl py-8">
           Stacks, Clarity &amp; Bitcoin Development
@@ -33,6 +34,6 @@ export default async function Home() {
         </section>
       </main>
       <Footer />
-    </>
+    </PageProvider>
   );
 }

@@ -1,13 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import {
-  AuthenticationProvider,
-  useAuthentication,
-} from "../_context/AuthenticationContext";
-import { FC } from "react";
+import { useAuthentication } from "../_context/AuthenticationContext";
 import toast from "react-hot-toast";
-import { SessionData } from "@/lib/server/session";
 
 const ConnectButton = () => {
   const { signIn } = useAuthentication();
@@ -24,7 +19,7 @@ const ConnectButton = () => {
       className="hover:underline hover:underline-offset-4"
       onClick={handleSignIn}
     >
-      (connect)
+      (sign in)
     </button>
   );
 };
@@ -36,7 +31,7 @@ const DisconnectButton = () => {
       className="hover:underline hover:underline-offset-4"
       onClick={() => signOut()}
     >
-      (disconnect)
+      (sign out)
     </button>
   );
 };
@@ -50,9 +45,7 @@ const WalletConnectButton = () => {
   );
 };
 
-export const Header: FC<{ session: SessionData | undefined }> = ({
-  session,
-}) => {
+export const Header = () => {
   return (
     <header className="flex flex-col justify-between w-full border-b border-white border-dotted pb-2">
       <span id="logo">
@@ -71,9 +64,7 @@ export const Header: FC<{ session: SessionData | undefined }> = ({
             <Link href="/posts">(posts)</Link>
           </li>
           <li>
-            <AuthenticationProvider session={session}>
-              <WalletConnectButton />
-            </AuthenticationProvider>
+            <WalletConnectButton />
           </li>
           <li>)</li>
         </ul>

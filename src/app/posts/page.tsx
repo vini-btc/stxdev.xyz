@@ -3,13 +3,14 @@ import { Header } from "../_ui/Header";
 import { Footer } from "../_ui/Footer";
 import { getAllPosts } from "@/lib/server/posts";
 import { getSessionData } from "@/lib/server/session";
+import { PageProvider } from "../_context/PageProvider";
 
 export default async function Posts() {
   const allPosts = getAllPosts();
   const session = await getSessionData();
   return (
-    <>
-      <Header session={session} />
+    <PageProvider session={session}>
+      <Header />
       <section className="py-4 w-full min-h-full">
         <h2 className="text-lg">All Posts</h2>
         <ul className="flex flex-col space-y-2 py-4">
@@ -23,6 +24,6 @@ export default async function Posts() {
         </ul>
       </section>
       <Footer />
-    </>
+    </PageProvider>
   );
 }
