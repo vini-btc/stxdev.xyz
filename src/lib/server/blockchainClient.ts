@@ -1,5 +1,5 @@
 import axios from "axios";
-import { BLOCKCHAIN_API_KEY, BLOCKCHAIN_API_URL } from "../config";
+import { BLOCKCHAIN_API_KEY, BLOCKCHAIN_API_URL } from "@/lib/server/config";
 
 /*
  * Connects to a Stacks API

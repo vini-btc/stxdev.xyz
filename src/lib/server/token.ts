@@ -6,7 +6,7 @@ import {
 } from "@stacks/transactions";
 import { blockchainApiClient } from "./blockchainClient";
 import { SessionData, isAuthenticated } from "./session";
-import { NFT_CONTRACT_ADDRESS, NFT_CONTRACT_NAME } from "../config";
+import { NFT_CONTRACT_ADDRESS, NFT_CONTRACT_NAME } from "../client/config";
 
 export const getTokenPrice = async (): Promise<number> => {
   return Number(50_000 / 1_000_000);

@@ -1,6 +1,6 @@
 import { getIronSession } from "iron-session";
 import type { IronSession, SessionOptions } from "iron-session";
-import { SECRET_COOKIE_PASSWORD, COOKIE_NAME } from "../config";
+import { SECRET_COOKIE_PASSWORD, COOKIE_NAME } from "../server/config";
 import { cookies } from "next/headers";
 
 export interface SessionData {
