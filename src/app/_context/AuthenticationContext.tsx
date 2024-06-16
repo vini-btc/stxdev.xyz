@@ -83,7 +83,7 @@ function AuthenticationProvider({
     ) {
       setConnectedAddress(session.stxAddress);
     }
-  }, [session?.stxAddress]);
+  }, [session]);
 
   const connectWallet = async (): Promise<string> => {
     return new Promise((resolve, reject) => {
