@@ -5,6 +5,7 @@ import Link from "next/link";
 import { TokenDashboard } from "../_ui/TokenDashboard";
 import { PageProvider } from "../_context/PageProvider";
 import { getTokenPrice, isTokenOwner } from "@/lib/server/token";
+import { CONSOLE_LINK } from "@/lib/config";
 
 export default async function Membership() {
   const session = await getSessionData();
@@ -19,10 +20,11 @@ export default async function Membership() {
         <p>
           Become a blog member by owning our NFT token. Holders of the NFT have
           access to members-only posts and exclusive channels on&nbsp;
-          <Link href="https://app.console.xyz/c/stxdev">
-            the blog's Console community
-          </Link>
-          .
+          <Link href={CONSOLE_LINK}>the blog&apos;s Console community</Link>.
+        </p>
+        <p>
+          Make sure to get your token sooner than later! The token mint fee
+          starts at 0,05 STX. After every 25 tokens, the fee increases 10x.
         </p>
         <TokenDashboard ownsToken={ownsToken} tokenPrice={tokenPrice} />
       </section>

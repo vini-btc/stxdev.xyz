@@ -6,6 +6,8 @@ import { Header } from "@/app/_ui/Header";
 import { Footer } from "@/app/_ui/Footer";
 import { getSessionData } from "@/lib/server/session";
 import { PageProvider } from "@/app/_context/PageProvider";
+import MembersOnly from "@/app/_ui/MembersOnly";
+import { isTokenOwner } from "@/lib/server/token";
 
 export default async function Post({ params }: Params) {
   const post = getPostBySlug(params.slug);
@@ -13,6 +15,10 @@ export default async function Post({ params }: Params) {
 
   if (!post) {
     return notFound();
+  }
+
+  if (post.private && !(await isTokenOwner(session))) {
+    return <MembersOnly session={session} />;
   }
 
   const content = await markdownToHtml(post.content || "");

@@ -24,6 +24,7 @@ export const SECRET_COOKIE_PASSWORD =
   "it-is-a-secret-but-a-very-long-one-so-you-would-have-a-hard-time-guessing-it-if-you-tried";
 export const NFT_CONTRACT_ADDRESS = "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM";
 export const NFT_CONTRACT_NAME = "stxdev";
+export const CONSOLE_LINK = "https://app.console.xyz/c/stxdev";
 
 export const appConfig = new AppConfig(
   ["store_write", "publish_data"],
