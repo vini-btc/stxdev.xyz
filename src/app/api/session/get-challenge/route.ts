@@ -11,11 +11,11 @@ function generateChallengeNonce(): string {
 // - rate limit?
 // - setup something at the infra level?
 export async function GET(req: NextRequest) {
+  const requestUrl = req.nextUrl.searchParams;
   try {
-    const requestUrl = req.nextUrl.searchParams;
+    const session = await getSession();
     const stxAddress = requestUrl.get("stxAddress") ?? "";
     const principalAddress = createAddress(stxAddress);
-    const session = await getSession();
     const nonce = generateChallengeNonce();
     const challenge = `
       Hi! You're connecting to stxdev.xyz. Please sign this message so we can confirm your address.
