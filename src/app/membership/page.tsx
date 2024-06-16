@@ -5,7 +5,7 @@ import Link from "next/link";
 import { TokenDashboard } from "../_ui/TokenDashboard";
 import { PageProvider } from "../_context/PageProvider";
 import { getTokenPrice, isTokenOwner } from "@/lib/server/token";
-import { CONSOLE_LINK } from "@/lib/config";
+import { CONSOLE_LINK } from "@/lib/client/config";
 
 export default async function Membership() {
   const session = await getSessionData();

@@ -1,14 +1,9 @@
 import { showConnect, showSignMessage } from "@stacks/connect";
 import React, { createContext, useEffect, useState } from "react";
 import { apiClient } from "@/lib/client/apiClient";
-import {
-  STACKS_ENV,
-  Network,
-  getNetwork,
-  walletSession,
-  appDetails,
-} from "@/lib/config";
 import { SessionData } from "@/lib/server/session";
+import { NETWORK, appDetails, walletSession } from "@/lib/client/config";
+import { Network, getNetwork } from "@/lib/configHelper";
 
 const AuthenticationContext = createContext<{
   signIn: () => Promise<void>;
@@ -55,7 +50,7 @@ const verifyChallenge = async ({
 function getConnectedWalletAddress(): string | undefined {
   if (walletSession.isUserSignedIn()) {
     const profile = walletSession.loadUserData().profile;
-    return STACKS_ENV === Network.MAINNET
+    return NETWORK === Network.MAINNET
       ? profile.stxAddress.mainnet
       : profile.stxAddress.testnet;
   }
@@ -92,7 +87,7 @@ function AuthenticationProvider({
         onFinish: async (payload) => {
           const stxAddress = payload.authResponsePayload.profile.stxAddress;
           const address =
-            STACKS_ENV === Network.MAINNET
+            NETWORK === Network.MAINNET
               ? stxAddress.mainnet
               : stxAddress.testnet;
           resolve(address);
@@ -106,7 +101,7 @@ function AuthenticationProvider({
   };
 
   const signMessage = async (walletAddress: string): Promise<boolean> => {
-    const network = getNetwork();
+    const network = getNetwork(NETWORK);
     const challenge = await getChallengeMessage(walletAddress);
     return new Promise((resolve, reject) => {
       showSignMessage({

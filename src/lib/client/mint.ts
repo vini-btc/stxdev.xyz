@@ -4,8 +4,13 @@ import {
   createSTXPostCondition,
   principalCV,
 } from "@stacks/transactions";
-import { NFT_CONTRACT_ADDRESS, NFT_CONTRACT_NAME, getNetwork } from "../config";
+import {
+  NFT_CONTRACT_ADDRESS,
+  NFT_CONTRACT_NAME,
+  NETWORK,
+} from "../client/config";
 import { openContractCall, ContractCallOptions } from "@stacks/connect";
+import { getNetwork } from "../configHelper";
 
 const normalizeTxPrefix = (tx: string): string => {
   return tx.startsWith("0x") ? tx : `0x${tx}`;
@@ -23,7 +28,7 @@ export const mint = ({
   onError: (cause: string) => void;
 }) => {
   const functionArgs: ClarityValue[] = [principalCV(connectedAddress)];
-  const network = getNetwork();
+  const network = getNetwork(NETWORK);
   const stxPostCondition = createSTXPostCondition(
     connectedAddress,
     FungibleConditionCode.Equal,

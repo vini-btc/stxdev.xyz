@@ -3,7 +3,7 @@
 import { FC, useState } from "react";
 import { useAuthentication } from "../_context/AuthenticationContext";
 import { mint } from "@/lib/client/mint";
-import { CONSOLE_LINK } from "@/lib/config";
+import { CONSOLE_LINK } from "@/lib/client/config";
 import toast from "react-hot-toast";
 import Link from "next/link";
 
@@ -56,7 +56,7 @@ const Dashboard: FC<{ tokenPrice: number; ownsToken: boolean }> = ({
 
   if (isSignedIn && !ownsToken) {
     return (
-      <div className="border border-white border-dotted border-x-0 py-4 px-2 my-2">
+      <div className="border-white border-dotted border-t pt-4 pb-0 px-2 my-2">
         <p className="p-0 m-0">
           Become a member by minting your stxdev token now:
         </p>
@@ -97,7 +97,9 @@ export const TokenDashboard: FC<{ tokenPrice: number; ownsToken: boolean }> = ({
   ownsToken,
 }) => (
   <div className="py-4 border border-dotted border-white rounded text-center">
-    <h2 className="m-0 px-0 font-mono font-normal text-lg">Members Token</h2>
+    <h2 className="m-0 px-0 font-mono font-normal text-lg mb-4">
+      Members Token
+    </h2>
     <Dashboard tokenPrice={tokenPrice} ownsToken={ownsToken} />
   </div>
 );
