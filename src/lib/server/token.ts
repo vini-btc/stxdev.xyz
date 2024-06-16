@@ -20,33 +20,37 @@ export const isTokenOwner = async (session: SessionData): Promise<boolean> => {
   if (!stxAddress) {
     throw new Error("Unauthenticated");
   }
-  const response = await blockchainApiClient.post<{
-    okay: boolean;
-    result?: string;
-    cause?: string;
-  }>(
-    `/v2/contracts/call-read/${NFT_CONTRACT_ADDRESS}/${NFT_CONTRACT_NAME}/is-token-owner`,
-    {
-      sender: stxAddress,
-      arguments: [cvToHex(principalCV(stxAddress))],
-    },
-
-    {
-      maxBodyLength: Infinity,
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
+  try {
+    const response = await blockchainApiClient.post<{
+      okay: boolean;
+      result?: string;
+      cause?: string;
+    }>(
+      `/v2/contracts/call-read/${NFT_CONTRACT_ADDRESS}/${NFT_CONTRACT_NAME}/is-token-owner`,
+      {
+        sender: stxAddress,
+        arguments: [cvToHex(principalCV(stxAddress))],
       },
-    },
-  );
 
-  if (response.data.okay && response.data.result !== undefined) {
-    const result = hexToCV(response.data.result);
-    return (
-      result.type === ClarityType.ResponseOk &&
-      result.value.type === ClarityType.BoolTrue
+      {
+        maxBodyLength: Infinity,
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+      },
     );
+
+    if (response.data.okay && response.data.result !== undefined) {
+      const result = hexToCV(response.data.result);
+      return (
+        result.type === ClarityType.ResponseOk &&
+        result.value.type === ClarityType.BoolTrue
+      );
+    }
+    return false;
+  } catch (error) {
+    console.error(error);
+    return false;
   }
-  console.log({ response });
-  return false;
 };

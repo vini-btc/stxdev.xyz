@@ -3,7 +3,7 @@ import { Header } from "./_ui/Header";
 import { Footer } from "./_ui/Footer";
 import { getAllPosts } from "@/lib/server/posts";
 import { getSessionData } from "@/lib/server/session";
-import { DoubleArrowRightIcon } from "@radix-ui/react-icons";
+import { DoubleArrowRightIcon, LockClosedIcon } from "@radix-ui/react-icons";
 import { PageProvider } from "./_context/PageProvider";
 
 export default async function Home() {
@@ -25,7 +25,11 @@ export default async function Home() {
                   href={`/posts/${post.slug}`}
                   className="flex items-center animated-feature-post"
                 >
-                  <DoubleArrowRightIcon className="mr-2" />
+                  {post.private ? (
+                    <LockClosedIcon className="mr-2" />
+                  ) : (
+                    <DoubleArrowRightIcon className="mr-2" />
+                  )}
                   <span>{post.title}</span>
                 </Link>
               </li>

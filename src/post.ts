@@ -7,4 +7,5 @@ export type Post = {
     url: string;
   };
   content: string;
+  private: boolean;
 };
