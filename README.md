@@ -38,7 +38,30 @@ Create a new private repository to host your blog source files. Then, on the **C
 | SECRET_COOKIE_PASSWORD | Used to encrypt your cookie information so the client cannot tamper the data | a-very-long-random-key...|
 | COOKIE_NAME | The cookie identifier | blog-cookie |
 
-## Developing and customizing it
+And that's pretty much it. Your blog will be deployed to Vercel and you can start playing with it. Setup a nice custom domain and start sharing knowledge with your community.
+
+### 3. Publishing Posts
+
+In the previous step, you created a new git repository to host your blog's source code. You'll need to work with this repository to update your blog and publish new content. Clone this repository locally. If you're not familiar with git or github, make sure to check [github's docs](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository?tool=desktop). Once you clone it, the repository will be a folder on your own machine.
+
+Every post in the blog is a markdown file in the [_posts](./_posts) subfolder. To write a new one, simply create a new `.md` file there. We're using [front matter](https://frontmatter.codes) to manage a page's metadata. This means that every markdown file starts with a special block of information delimited by `---`. Bellow is an example:
+
+```markdown
+---
+title: "Lorem ipsum dolor sit amet"
+excerpt: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididun..."
+date: "2020-03-16T05:35:07.322Z"
+private: false
+---
+```
+
+The `private` field has an special meaning. It controls whether the post will be publicly available or if it's a NFT-holder-only post.
+
+Once you're done writing writing your blog post, [push the changes](https://docs.github.com/en/desktop/making-changes-in-a-branch/pushing-changes-to-github-from-github-desktop) to your remote git repository. This will automatically trigger a new deploy on Vercel, and your content update will be live in a few seconds!
+
+## Contributions
+
+All contributions are welcome!
 
 This is a project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
@@ -46,11 +69,3 @@ To learn more about Next.js, take a look at the following resources:
 
 - [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
 - [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
