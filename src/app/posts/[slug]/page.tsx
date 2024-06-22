@@ -26,12 +26,9 @@ export default async function Post({ params }: Params) {
   return (
     <PageProvider session={session}>
       <Header />
-      <article className="overflow-y-auto flex-grow flex-shrink py-16 prose">
-        <h1 className="font-mono text-white font-normal">{post.title}</h1>
-        <div
-          className="text-white prose-h2:text-white prose-h2:font-mono prose-h2:font-normal"
-          dangerouslySetInnerHTML={{ __html: content }}
-        />
+      <article className="overflow-y-auto flex-grow flex-shrink py-16 prose prose-invert font-mono prose-headings:font-normal">
+        <h1>{post.title}</h1>
+        <div dangerouslySetInnerHTML={{ __html: content }} />
       </article>
       <Footer />
     </PageProvider>
